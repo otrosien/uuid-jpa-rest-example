@@ -4,3 +4,4 @@
 bin/
 .gradle/
 build/
+lib/spring-instrument.jar
