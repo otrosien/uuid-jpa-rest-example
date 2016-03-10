@@ -1,4 +1,4 @@
-# JPA/Eclipselink UUID primary key sample
+# JPA/EclipseLink UUID primary key example
 
 Example project for demoing the use of UUIDs as primary keys in JPA, using 
 Version 1 (time-based) UUIDs by default.
@@ -6,7 +6,12 @@ Version 1 (time-based) UUIDs by default.
 ## Special Features
 
 The UUID is not, naively serialized as String, but into a two-byte array.
-It is using the JUG (Java Uuid Generator) library for generation of Version-1 UUIDs.
+It is using the [Java Uuid Generator](https://github.com/cowtowncoder/java-uuid-generator)
+library for generating Version-1 UUIDs.
+
+## How to run
+
+On the command-line run `./gradlew bootRun` and open a browser at http://localhost:8080/ .
 
 ## Further references:
 
