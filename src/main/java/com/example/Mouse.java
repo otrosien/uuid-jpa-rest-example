@@ -5,12 +5,18 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import com.fasterxml.uuid.NoArgGenerator;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 public class Mouse {
+
+    @Transient
+    private static final NoArgGenerator UUID_GENERATOR = DemoApplication.uuidGenerator();
 
     @Id
     @Column(columnDefinition="BINARY(16)")
@@ -22,7 +28,7 @@ public class Mouse {
     private String name;
 
     public Mouse() {
-        id = UUID.randomUUID();
+        id = UUID_GENERATOR.generate();
     }
 
     public Mouse(UUID id) {
