@@ -5,7 +5,7 @@ Version 1 (time-based) UUIDs by default.
 
 ## Special Features
 
-The UUID is not, naively serialized as String, but into a two-byte array.
+The UUID is not, naively serialized as String, but into a 16-byte array.
 It is using the [Java Uuid Generator](https://github.com/cowtowncoder/java-uuid-generator)
 library for generating Version-1 UUIDs.
 
