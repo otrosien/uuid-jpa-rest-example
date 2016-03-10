@@ -1,11 +1,11 @@
 package com.example;
 
+import static org.hamcrest.core.StringEndsWith.endsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.net.URI;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,9 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.client.Traverson;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -47,12 +44,11 @@ public class DemoApplicationTests {
 
     @Test
     public void restTest() throws Exception {
-        Traverson traverson = new Traverson(URI.create("http://localhost:" + port + "/"), MediaTypes.HAL_JSON);
-        Link link = traverson.follow("mice").asLink();
-        mvc.perform(post(link.expand().getHref()).content(
+        mvc.perform(put("/mice/0f629be4-e6cc-11e5-bb3b-3bf5fa6b2828").content(
                 new ObjectMapper().writeValueAsString(ImmutableMap.of("name", "My Mouse"))
         ))
         .andExpect(status().isCreated())
+        .andExpect(header().string("Location", endsWith("/mice/0f629be4-e6cc-11e5-bb3b-3bf5fa6b2828")))
         .andDo(print())
         .andDo((a) -> {
             // follow the location header.
