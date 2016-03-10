@@ -26,11 +26,7 @@ repositories {
     maven { url "https://repo.spring.io/milestone" }
 }
 
-configurations { instrument { description 'classpath for instrument as java agent' } }
-
 dependencies {
-    instrument('org.springframework:spring-instrument')
-
     compile("org.springframework.boot:spring-boot-starter-data-jpa") { exclude module: 'hibernate-entitymanager' }
     compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.1'
     compile("org.springframework.boot:spring-boot-starter-data-rest")
@@ -48,26 +44,22 @@ dependencies {
 }
 
 dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-starter-parent:1.4.0.M1"
-    }
+    imports { mavenBom "org.springframework.boot:spring-boot-starter-parent:1.4.0.M1" }
 }
 
-test { jvmArgs "-javaagent:$project.configurations.instrument.singleFile" }
-
 bootRun {
-    jvmArgs "-javaagent:$project.configurations.instrument.singleFile"
     systemProperties = System.properties
 }
 
-task copySpringInstrumentJar (type:Copy) {
-    description = 'Copies the spring-instrument.jar into your lib directory.'
-    outputs.file project.file('lib/spring-instrument.jar')
-    from (project.configurations.instrument)
-    into("lib")
-    rename { String filename -> filename = 'spring-instrument.jar' }
+task performJPAWeaving (type: JavaExec) {
+    inputs.dir compileJava.destinationDir
+    outputs.dir compileJava.destinationDir
+    main "org.eclipse.persistence.tools.weaving.jpa.StaticWeave"
+    args "-persistenceinfo",
+            project.file("src/main/resources"),
+            compileJava.destinationDir.absolutePath,
+            compileJava.destinationDir.absolutePath
+    classpath = project.configurations.compile
 }
 
-tasks.idea.dependsOn(project.tasks.copySpringInstrumentJar)
-tasks.eclipse.dependsOn(project.tasks.copySpringInstrumentJar)
-tasks.processResources.dependsOn(project.tasks.copySpringInstrumentJar)
+tasks.compileJava.finalizedBy(tasks.performJPAWeaving)
