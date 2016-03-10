@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,9 +25,6 @@ import com.google.common.collect.ImmutableMap;
 @SpringApplicationConfiguration(classes = DemoApplication.class)
 @WebIntegrationTest(randomPort=true)
 public class DemoApplicationTests {
-
-    @Value("${local.server.port}")
-    private int port;
 
     @Autowired
     private WebApplicationContext context;
