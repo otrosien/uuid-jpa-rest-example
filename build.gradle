@@ -10,13 +10,10 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
-jar {
-    baseName = 'demo'
-    version = '0.0.1-SNAPSHOT'
-}
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -24,6 +21,10 @@ repositories {
     mavenCentral()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
+}
+
+dependencyManagement {
+    imports { mavenBom "org.springframework.boot:spring-boot-starter-parent:1.4.0.M1" }
 }
 
 dependencies {
@@ -43,8 +44,17 @@ dependencies {
     compileOnly('org.projectlombok:lombok:1.16.8')
 }
 
-dependencyManagement {
-    imports { mavenBom "org.springframework.boot:spring-boot-starter-parent:1.4.0.M1" }
+jar {
+    baseName = 'demo'
+    version = '0.0.1-SNAPSHOT'
+}
+
+eclipse {
+    wtp {
+        facet {
+            facet name: 'jpt.jpa', version: '2.1'
+        }
+    }
 }
 
 bootRun {
