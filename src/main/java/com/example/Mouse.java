@@ -8,9 +8,6 @@ import javax.persistence.Id;
 
 import com.fasterxml.uuid.NoArgGenerator;
 
-import lombok.Getter;
-import lombok.Setter;
-
 @Entity
 public class Mouse {
 
@@ -18,11 +15,8 @@ public class Mouse {
 
     @Id
     @Column(columnDefinition="BINARY(16)")
-    @Getter
     private UUID id;
 
-    @Getter
-    @Setter
     private String name;
 
     public Mouse() {
@@ -31,5 +25,17 @@ public class Mouse {
 
     public Mouse(UUID id) {
         this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

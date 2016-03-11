@@ -39,9 +39,6 @@ dependencies {
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testRuntime('com.jayway.jsonpath:json-path:2.2.0')
-
-    // gradle 2.12 feature
-    compileOnly('org.projectlombok:lombok:1.16.8')
 }
 
 jar {
