@@ -5,6 +5,9 @@ import java.util.UUID;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
+/**
+ * Original code from org.hibernate.internal.util.BytesHelper
+ */
 @Converter(autoApply=true)
 public class UUIDPersistenceConverter implements AttributeConverter<UUID, byte[]> {
 
