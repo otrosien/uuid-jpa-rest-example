@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencyManagement {
+    ext['spring-data-releasetrain.version'] = 'Hopper-RC1'
     imports { mavenBom "org.springframework.boot:spring-boot-starter-parent:1.4.0.M1" }
 }
 
