@@ -8,6 +8,9 @@ The UUID is not naïvely serialized as String, but into a 16-byte array.
 It is using the [Java Uuid Generator](https://github.com/cowtowncoder/java-uuid-generator)
 library for generating Version-1 UUIDs.
 
+Although not directly related to UUID persistence, this project also applies EclipseLinks load-time
+weaving, when spring-instrument.jar is present.
+
 ## How to run
 
 On the command-line run `./gradlew bootRun` and open a browser at [http://localhost:8080/](http://localhost:8080/).
