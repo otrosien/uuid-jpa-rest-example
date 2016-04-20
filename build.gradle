@@ -1,5 +1,5 @@
 buildscript {
-    ext { springBootVersion = '1.4.0.M1' }
+    ext { springBootVersion = '1.4.0.M2' }
     repositories {
         mavenCentral()
         maven { url "https://repo.spring.io/snapshot" }
