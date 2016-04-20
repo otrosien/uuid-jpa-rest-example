@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -27,9 +26,6 @@ import lombok.Setter;
 @Access(FIELD)
 @EntityListeners({AuditingEntityListener.class})
 public class Mouse {
-
-    @Transient
-    private static final UUIDGenerator UUID_GENERATOR = DemoApplication.uuidGenerator();
 
     @Id
     @Column(columnDefinition="BINARY(16)")
@@ -60,7 +56,7 @@ public class Mouse {
     private String name;
 
     public Mouse() {
-        id = UUID_GENERATOR.generate();
+        id = DemoApplication.uuidGenerator().generate();
     }
 
     public Mouse(UUID id) {

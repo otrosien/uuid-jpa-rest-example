@@ -6,12 +6,21 @@ Example project for demonstrating the use of UUIDs as primary keys in JPA.
 
 ## Special Features
 
+### UUID persistence
+
 The UUID is not naïvely serialized as String, but into a 16-byte array.
 It is using the [Java Uuid Generator](https://github.com/cowtowncoder/java-uuid-generator)
-library for generating Version-1 UUIDs.
+library for generating Version-1 UUIDs, hiding the actual implementation behind a functional interface.
+
+### JPA auditing and optimistic locking
+
+The `Mouse` entity has support for last-modified-based and ETag-based optimistic locking.
+These properties are hidden from the business model and REST API (i.e. private fields without getters/setters)
+
+### EclipseLink load-time weaving
 
 Although not directly related to UUID persistence, this project also applies EclipseLinks load-time
-weaving, when spring-instrument.jar is present.
+weaving, but only when spring-instrument.jar is present on the classpath.
 
 ## How to run
 
