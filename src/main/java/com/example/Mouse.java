@@ -34,28 +34,25 @@ public class Mouse {
     @Id
     @Column(columnDefinition="BINARY(16)")
     @Getter
-    // JPA spec prohibits final, but 
-    // eclipselink and hibernate actually would be fine.
+    // JPA spec prohibits final, but both
+    // eclipselink and hibernate actually would be fine with it.
     private UUID id;
 
     @Version
     @Column(name = "OPT_LOCK", nullable = false)
     @JsonIgnore
-    @Getter
     private Long optLock;
 
     @Basic
     @CreatedDate
     @JsonIgnore
     @Column(name = "CREATED_AT", nullable = false, insertable = true, updatable = false)
-    @Getter
     private LocalDateTime createdAt;
 
     @Basic
     @LastModifiedDate
     @JsonIgnore
     @Column(name = "LAST_MODIFIED_AT", nullable = false, insertable = true, updatable = true)
-    @Getter
     private LocalDateTime lastModifiedAt;
 
     @Getter
