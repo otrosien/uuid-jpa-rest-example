@@ -5,7 +5,6 @@ import static org.springframework.context.annotation.EnableLoadTimeWeaving.Aspec
 
 import java.util.Map;
 
-import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,7 +22,7 @@ import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import com.google.common.collect.ImmutableMap;
 
 @Configuration
-@ConditionalOnClass(org.eclipse.persistence.jpa.PersistenceProvider.class)
+@ConditionalOnClass(name="org.eclipse.persistence.jpa.PersistenceProvider")
 public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(EclipseLinkJpaConfiguration.class);
@@ -40,8 +39,8 @@ public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
     protected Map<String, Object> getVendorProperties() {
         final String weave = loadTimeWeaver == null ? "false":"true";
         final ImmutableMap<String, Object> immutableMap = ImmutableMap.<String, Object>builder() //
-                .put(PersistenceUnitProperties.TABLE_CREATION_SUFFIX, ";")
-                .put(PersistenceUnitProperties.WEAVING, weave) //
+                .put("eclipselink.ddl-generation.table-creation-suffix", ";")
+                .put("eclipselink.weaving", weave) //
                 .build();
         return newHashMap(immutableMap);
     }

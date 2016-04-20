@@ -35,7 +35,9 @@ dependencies {
     { 
         exclude module: 'hibernate-entitymanager'
     }
-    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.1'
+    compile 'org.eclipse.persistence:javax.persistence:2.1.0'
+    runtime 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.1'
+
     runtime 'com.h2database:h2'
     runtime 'mysql:mysql-connector-java'
 
