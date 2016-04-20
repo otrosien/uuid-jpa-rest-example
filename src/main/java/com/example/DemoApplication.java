@@ -11,7 +11,7 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EntityScan(basePackageClasses = {Mouse.class, org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.class})
+@EntityScan(basePackageClasses = {DemoApplication.class, org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.class})
 public class DemoApplication {
 
     private static final TimeBasedGenerator UUID_GENERATOR = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
