@@ -44,7 +44,7 @@ public class DemoApplicationTests {
                         // FIXME: This is a workaround to an issue not reproducable when calling the 
                         // REST API via browser! Without duplicating the ID Spring-Data-REST will not
                         // insert the given ID from the URL into the entity!
-                        , "id", "0f629be4-e6cc-11e5-bb3b-3bf5fa6b2828"
+//                        , "id", "0f629be4-e6cc-11e5-bb3b-3bf5fa6b2828"
                         ))
         ))
         .andDo(print())
