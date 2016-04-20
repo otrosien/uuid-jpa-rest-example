@@ -14,8 +14,9 @@ library for generating Version-1 UUIDs, hiding the actual implementation behind 
 
 ### JPA auditing and optimistic locking
 
-The `Mouse` entity has support for last-modified-based and ETag-based optimistic locking.
-These properties are hidden from the business model and REST API (i.e. private fields without getters/setters)
+The `Mouse` entity has support for last-modified-based and `ETag`-based optimistic locking.
+The extra properties ( `optLock`, `createdAt`, `lastModifiedAt` ) are hidden from the business model and resource representations 
+(i.e. private fields without getters/setters)
 
 ### EclipseLink load-time weaving
 

@@ -30,12 +30,14 @@ public class Mouse {
     @Id
     @Column(columnDefinition="BINARY(16)")
     @Getter
-    // JPA spec prohibits final, but both
-    // eclipselink and hibernate actually would be fine with it.
+    // JPA specification prohibits final, but both
+    // EclipseLink and Hibernate would actually be fine with it.
     private UUID id;
 
     @Version
     @Column(name = "OPT_LOCK", nullable = false)
+    // excluded by default, so this annotation is 
+    // purely for documentation purposes.
     @JsonIgnore
     private Long optLock;
 
