@@ -1,6 +1,6 @@
 # JPA/EclipseLink UUID primary key example
 
-[![Build Status](https://travis-ci.org/otrosien/uuid-jpa-rest-example.png)](https://travis-ci.org/otrosien/uuid-jpa-rest-example)
+[![Build Status](https://travis-ci.org/otrosien/uuid-jpa-rest-example.svg)](https://travis-ci.org/otrosien/uuid-jpa-rest-example)
 
 Example project for demonstrating the use of UUIDs as primary keys in JPA.
 
