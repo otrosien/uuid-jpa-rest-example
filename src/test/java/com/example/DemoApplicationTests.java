@@ -40,18 +40,19 @@ public class DemoApplicationTests {
     @Test
     public void restTest() throws Exception {
         mvc.perform(put("/mice/0f629be4-e6cc-11e5-bb3b-3bf5fa6b2828").content(
-                new ObjectMapper().writeValueAsString(ImmutableMap.of("name", "My Mouse", 
+                new ObjectMapper().writeValueAsString(ImmutableMap.of("name", "My Mouse" 
                         // FIXME: This is a workaround to an issue not reproducable when calling the 
                         // REST API via browser! Without duplicating the ID Spring-Data-REST will not
                         // insert the given ID from the URL into the entity!
-                        "id", "0f629be4-e6cc-11e5-bb3b-3bf5fa6b2828"))
+                        , "id", "0f629be4-e6cc-11e5-bb3b-3bf5fa6b2828"
+                        ))
         ))
+        .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(header().string("Location", endsWith("/mice/0f629be4-e6cc-11e5-bb3b-3bf5fa6b2828")))
-        .andDo(print())
-        .andDo((a) -> {
+        .andDo((putMouse) -> {
             // follow the location header.
-            mvc.perform(get(a.getResponse().getHeader("Location")))
+            mvc.perform(get(putMouse.getResponse().getHeader("Location")))
             .andDo(print())
             .andExpect(status().isOk());
         });

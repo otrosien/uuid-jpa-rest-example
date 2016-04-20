@@ -25,6 +25,12 @@ repositories {
 
 configurations { instrument { description 'classpath for instrument as java agent' } }
 
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
 dependencies {
     // Tooling
     instrument 'org.springframework:spring-instrument'

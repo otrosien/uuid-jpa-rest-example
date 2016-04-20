@@ -3,10 +3,14 @@ spring:
     generate-ddl: true
     show-sql: true
     properties:
-      eclipselink.logging.level: FINEST
+      eclipselink.logging.level: WARNING
 #     loadtime-weaving is enabled when finding the use of -javaagent:lib/spring-instrument.jar
 #     weaving details can be customized here:
       eclipselink.weaving.rest: false
+
+logging:
+  level:
+    root: WARN
 
   datasource:
     platform: h2
