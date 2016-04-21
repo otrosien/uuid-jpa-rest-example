@@ -21,7 +21,7 @@ In addition to the `id`, which is immutable, there is the `name` property as bus
 Most business identifiers in the wild are not immutable, unfortunately.
 Still, by default the URI is composed using the business identifier, creating human-readable URIs.
 For the case of "renamed mice", there is still the possibility of a look-up via the finder resource
-`/searcH/findById`.
+`/search/findById`.
 
 ### JPA auditing and optimistic locking
 
