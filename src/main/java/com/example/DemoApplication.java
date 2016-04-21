@@ -3,7 +3,10 @@ package com.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.orm.jpa.EntityScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
@@ -24,4 +27,14 @@ public class DemoApplication {
         return () -> UUID_GENERATOR.generate();
     }
 
+    @Configuration
+    static class MouseRestConfiguration extends RepositoryRestMvcConfiguration {
+
+        @Override
+        protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+            config.exposeIdsFor(Mouse.class);
+            config.withEntityLookup().//
+            forRepository(MouseRepository.class, Mouse::getName, MouseRepository::findByName);
+        }
+    }
 }

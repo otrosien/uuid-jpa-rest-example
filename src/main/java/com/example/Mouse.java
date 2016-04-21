@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -25,6 +27,9 @@ import lombok.Setter;
 @Entity
 @Access(FIELD)
 @EntityListeners({AuditingEntityListener.class})
+@Table(name="MOUSE", indexes= {
+        @Index(columnList="NAME", unique=true)
+})
 public class Mouse {
 
     @Id
@@ -55,6 +60,7 @@ public class Mouse {
 
     @Getter
     @Setter
+    @Column(name = "NAME", nullable = false, insertable = true, updatable = true)
     private String name;
 
     public Mouse() {
