@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 
@@ -14,6 +15,7 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableJpaRepositories
 @EntityScan(basePackageClasses = {DemoApplication.class, org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.class})
 public class DemoApplication {
 
