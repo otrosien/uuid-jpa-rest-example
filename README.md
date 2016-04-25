@@ -1,8 +1,10 @@
-# JPA/EclipseLink UUID primary key example
+# JPA UUID primary key example
 
 [![Build Status](https://travis-ci.org/otrosien/uuid-jpa-rest-example.svg)](https://travis-ci.org/otrosien/uuid-jpa-rest-example)
 
 Example project for demonstrating the use of UUIDs as primary keys in JPA and Spring Data REST.
+Current `master` branch uses hibernate as implementation, while the `eclipselink` tag shows 
+an alternative implementation using EclipseLink as JPA provider.
 
 ## Special Features
 
@@ -32,7 +34,7 @@ and resource representations (i.e. private fields without getters/setters)
 ### EclipseLink load-time weaving
 
 Although not directly related to UUID persistence, this project also applies EclipseLink's load-time
-weaving, but only when `spring-instrument.jar` is present on the classpath.
+weaving, but only when `spring-instrument.jar` is present on the classpath. (see the `eclipselink` tag)
 
 ## How to run
 

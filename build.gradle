@@ -23,8 +23,6 @@ repositories {
     maven { url "https://repo.spring.io/milestone" }
 }
 
-configurations { instrument { description 'classpath for instrument as java agent' } }
-
 test {
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
@@ -33,16 +31,10 @@ test {
 
 dependencies {
     // Tooling
-    instrument 'org.springframework:spring-instrument'
     compileOnly 'org.projectlombok:lombok:1.16.8'
 
     // Database
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    { 
-        exclude module: 'hibernate-entitymanager'
-    }
-    compile 'org.eclipse.persistence:javax.persistence:2.1.0'
-    runtime 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.1'
 
     runtime 'com.h2database:h2'
     runtime 'mysql:mysql-connector-java'
@@ -74,21 +66,6 @@ eclipse {
     }
 }
 
-test { jvmArgs "-javaagent:$project.configurations.instrument.singleFile" }
-
 bootRun {
-    jvmArgs "-javaagent:$project.configurations.instrument.singleFile"
     systemProperties = System.properties
 }
-
-task copySpringInstrumentJar (type:Copy) {
-    description = 'Copies the spring-instrument.jar into your lib directory.'
-    outputs.file project.file('lib/spring-instrument.jar')
-    from (project.configurations.instrument)
-    into("lib")
-    rename { String filename -> filename = 'spring-instrument.jar' }
-}
-
-tasks.idea.dependsOn(project.tasks.copySpringInstrumentJar)
-tasks.eclipse.dependsOn(project.tasks.copySpringInstrumentJar)
-tasks.processResources.dependsOn(project.tasks.copySpringInstrumentJar)
