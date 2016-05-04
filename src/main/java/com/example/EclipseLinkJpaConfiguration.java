@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import com.google.common.collect.ImmutableMap;
 
 @Configuration
@@ -24,6 +27,7 @@ public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
     protected Map<String, Object> getVendorProperties() {
         final ImmutableMap<String, Object> immutableMap = ImmutableMap.<String, Object>builder() //
                 .put(PersistenceUnitProperties.TABLE_CREATION_SUFFIX, ";")
+                .put(PersistenceUnitProperties.SESSION_CUSTOMIZER, "com.example.UUIDSequence")
                 .build();
         return newHashMap(immutableMap);
     }
