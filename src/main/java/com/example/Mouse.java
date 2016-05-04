@@ -23,7 +23,7 @@ public class Mouse implements Persistable<UUID> {
 
     @Id
     @Column(columnDefinition="BINARY(16)")
-    @GeneratedValue(generator="system-uuid")
+    @GeneratedValue(generator="uuid-sequence")
     @Getter
     private UUID id;
 

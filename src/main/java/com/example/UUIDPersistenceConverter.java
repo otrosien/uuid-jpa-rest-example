@@ -11,7 +11,7 @@ public class UUIDPersistenceConverter implements AttributeConverter<UUID, byte[]
     @Override
     public byte[] convertToDatabaseColumn(UUID uuid) {
         if (uuid == null) {
-            return null;
+            return null; // NOSONAR - be able to persist a null value
         }
         return ToBytesTransformer.INSTANCE.transform(uuid);
     }

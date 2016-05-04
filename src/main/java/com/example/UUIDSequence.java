@@ -7,8 +7,6 @@ import org.eclipse.persistence.internal.databaseaccess.Accessor;
 import org.eclipse.persistence.internal.sessions.AbstractSession;
 import org.eclipse.persistence.sequencing.Sequence;
 import org.eclipse.persistence.sessions.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
@@ -16,14 +14,12 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 public class UUIDSequence extends Sequence implements SessionCustomizer {
 
-    private static final Logger log = LoggerFactory.getLogger(UUIDSequence.class);
-
     private static final long serialVersionUID = -8111815193483132234L;
 
     private static final TimeBasedGenerator UUID_GENERATOR = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
 
     private static final UUIDPersistenceConverter CONVERTER = new UUIDPersistenceConverter();
-    
+
     public UUIDSequence() {
         super();
     }
@@ -34,21 +30,21 @@ public class UUIDSequence extends Sequence implements SessionCustomizer {
 
     @Override
     public Object getGeneratedValue(Accessor accessor, AbstractSession writeSession, String seqName) {
-        log.info("generating next uuid");
         return CONVERTER.convertToDatabaseColumn(UUID_GENERATOR.generate());
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public Vector getGeneratedVector(Accessor accessor, AbstractSession writeSession, String seqName, int size) {
-        return null;
+        return null; // NOSONAR - this method is unused anyway.
     }
 
     @Override
-    public void onConnect() {
+    public void onConnect() { // nothing to do
     }
 
     @Override
-    public void onDisconnect() {
+    public void onDisconnect() { // nothing to do
     }
 
     @Override
@@ -66,8 +62,9 @@ public class UUIDSequence extends Sequence implements SessionCustomizer {
         return false;
     }
 
+    @Override
     public void customize(Session session) throws Exception {
-        UUIDSequence sequence = new UUIDSequence("system-uuid");
+        UUIDSequence sequence = new UUIDSequence("uuid-sequence");
         session.getLogin().addSequence(sequence);
     }
 
