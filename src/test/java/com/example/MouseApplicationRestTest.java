@@ -2,6 +2,7 @@ package com.example;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -10,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +29,7 @@ import com.google.common.collect.ImmutableMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class DemoApplicationTests {
+public class MouseApplicationRestTest {
 
     private MockMvc mvc;
 
@@ -57,7 +59,7 @@ public class DemoApplicationTests {
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("name", is("mickey")))
-            .andExpect(jsonPath("id", notNullValue()));
+            .andExpect(jsonPath("_id", notNullValue()));
         });
     }
 
@@ -66,8 +68,7 @@ public class DemoApplicationTests {
         // given
         mvc.perform(put("/mice/minney").content(
                 new ObjectMapper().writeValueAsString(ImmutableMap.of(
-                        "name", "minney",
-                        "id", "aa923a70-07b0-11e6-9f1b-a7ea756fd6b5"
+                        "name", "minney"
                         ))
         ))
         .andDo(print())
@@ -77,15 +78,14 @@ public class DemoApplicationTests {
             // follow the location header.
             mvc.perform(get(putMouse.getResponse().getHeader("Location")))
             .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("id", is("aa923a70-07b0-11e6-9f1b-a7ea756fd6b5")));
+            .andExpect(status().isOk());
         })
         .andDo((putMouse) -> {
             // follow the location header. Have to use PUT as 
             // on HTTP PATCH method there is no Location header.. ?!
             mvc.perform(put(putMouse.getResponse().getHeader("Location"))
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"name\":\"minney2\",\"id\":\"00000000-07b0-11e6-9f1b-a7ea756fd6b5\"}"))
+                    .content("{\"name\":\"minney2\",\"_id\":\"00000000-07b0-11e6-9f1b-a7ea756fd6b5\"}"))
             .andDo(print())
             .andExpect(status().isNoContent())
             .andExpect(header().string("Location", endsWith("/mice/minney2")))
@@ -93,7 +93,7 @@ public class DemoApplicationTests {
                 mvc.perform(get(patchMouse.getResponse().getHeader("Location")))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id", is("aa923a70-07b0-11e6-9f1b-a7ea756fd6b5")));
+                .andExpect(jsonPath("_id", is(not("00000000-07b0-11e6-9f1b-a7ea756fd6b5"))));
             });
         });
     }

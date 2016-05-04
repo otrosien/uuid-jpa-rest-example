@@ -7,10 +7,10 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 
 @SpringBootApplication
-public class DemoApplication {
+public class MouseApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(MouseApplication.class, args);
     }
 
     @Configuration

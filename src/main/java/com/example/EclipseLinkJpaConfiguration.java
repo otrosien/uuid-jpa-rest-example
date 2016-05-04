@@ -24,7 +24,7 @@ import com.google.common.collect.ImmutableMap;
 @Configuration
 @EnableJpaRepositories
 @EnableJpaAuditing
-@EntityScan(basePackageClasses = {DemoApplication.class, Jsr310JpaConverters.class})
+@EntityScan(basePackageClasses = {MouseApplication.class, Jsr310JpaConverters.class})
 public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
 
     protected EclipseLinkJpaConfiguration(DataSource dataSource, JpaProperties properties,
@@ -41,7 +41,7 @@ public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
     protected Map<String, Object> getVendorProperties() {
         final ImmutableMap<String, Object> immutableMap = ImmutableMap.<String, Object>builder() //
                 .put(PersistenceUnitProperties.TABLE_CREATION_SUFFIX, ";")
-                .put(PersistenceUnitProperties.SESSION_CUSTOMIZER, "com.example.UUIDSequence")
+                .put(PersistenceUnitProperties.SESSION_CUSTOMIZER, com.example.UUIDSequence.class.getName())
                 .build();
         return newHashMap(immutableMap);
     }

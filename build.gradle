@@ -48,6 +48,7 @@ dependencies {
     // REST
     runtime('org.springframework.data:spring-data-rest-hal-browser')
     compile("org.springframework.boot:spring-boot-starter-data-rest")
+    runtime 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
     // Util
     compile 'com.google.guava:guava:19.0'
