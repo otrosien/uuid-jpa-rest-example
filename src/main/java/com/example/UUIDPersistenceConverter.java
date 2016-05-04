@@ -21,6 +21,9 @@ public class UUIDPersistenceConverter implements AttributeConverter<UUID, byte[]
         if(binaryData == null) {
             return null;
         }
+        if ( binaryData.length != 16 ) {
+            throw new IllegalArgumentException( "Expecting 16 byte values to construct a UUID" );
+        }
         return ToBytesTransformer.INSTANCE.parse(binaryData);
     }
 
@@ -56,12 +59,6 @@ public class UUIDPersistenceConverter implements AttributeConverter<UUID, byte[]
         }
 
         private static long asLong(byte[] bytes) {
-            if ( bytes == null ) {
-                return 0;
-            }
-            if ( bytes.length != 8 ) {
-                throw new IllegalArgumentException( "Expecting 8 byte values to construct a long" );
-            }
             long value = 0;
             for (int i=0; i<8; i++) {
                 value = (value << 8) | (bytes[i] & 0xff);
