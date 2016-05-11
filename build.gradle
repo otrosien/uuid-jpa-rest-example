@@ -17,6 +17,7 @@ jar {
     baseName = 'demo'
     version = '0.0.1-SNAPSHOT'
 }
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -32,7 +33,11 @@ test {
     }
 }
 
-configurations { instrument { description 'classpath for instrument as java agent' } }
+configurations {
+    instrument { 
+        description 'classpath for instrument as java agent' 
+    }
+}
 
 dependencies {
     // Tooling
@@ -60,6 +65,7 @@ dependencies {
 
 dependencyManagement {
     imports {
+        ext['jackson.version'] = '2.6.5'
         mavenBom "org.springframework.boot:spring-boot-starter-parent:1.4.0.M1"
     }
 }

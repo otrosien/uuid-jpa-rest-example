@@ -1,7 +1,8 @@
 # JPA/Eclipselink UUID primary key sample
 
 Example project for demonstrating an enhanced usage of UUIDs as primary keys in JPA,
-using Version 1 (time-based) UUIDs. 
+using Version 1 (time-based) UUIDs.
+
 ## Special Features
 
 The UUID is not, naively serialized as String, but converted into a 16-byte array
@@ -19,3 +20,4 @@ serves as source for generation of (Version-1) UUIDs.
 * http://mysqlserverteam.com/storing-uuid-values-in-mysql-tables/
 * https://www.clever-cloud.com/blog/engineering/2015/05/20/why-auto-increment-is-a-terrible-idea/
 * https://wiki.eclipse.org/EclipseLink/Examples/JPA/CustomSequencing
+* http://stackoverflow.com/questions/10867405/generating-v5-uuid-what-is-name-and-namespace
