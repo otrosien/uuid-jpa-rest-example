@@ -14,14 +14,12 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name="MOUSE", indexes= {
         @Index(columnList="NAME", unique=true)
 })
-@ToString(of = "id")
 @NoArgsConstructor(access=PRIVATE)
 public class Mouse extends AbstractEntity {
 
@@ -63,6 +61,11 @@ public class Mouse extends AbstractEntity {
         if (!getId().equals(other.getId()))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Mouse [id=%s]", getId());
     }
 
 }
