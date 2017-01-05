@@ -23,6 +23,11 @@ repositories {
     mavenCentral()
 }
 
+project.tasks.withType(JavaCompile) {
+    options.fork = true
+    options.compilerArgs << '-parameters'
+}
+
 test {
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
