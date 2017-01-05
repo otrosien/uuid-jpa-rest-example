@@ -19,9 +19,11 @@ public class MouseApplication {
         @Override
         protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
             config
+                .setReturnBodyOnCreate(true)
+                .setReturnBodyOnUpdate(true)
                 .exposeIdsFor(Mouse.class)
                 .withEntityLookup()
-                    .forRepository(MouseRepository.class, Mouse::getName, MouseRepository::findByName);
+                    .forRepository(MouseRepository.class, Mouse::getName, MouseRepository::findLatestMouseByName);
         }
     }
 }

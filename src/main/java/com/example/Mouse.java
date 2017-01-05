@@ -1,5 +1,6 @@
 package com.example;
 
+import static javax.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.UUID;
@@ -9,8 +10,10 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,10 +21,11 @@ import lombok.Setter;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name="MOUSE", indexes= {
-        @Index(columnList="NAME", unique=true)
+        @Index(columnList="NAME", unique=false)
 })
 @NoArgsConstructor(access=PRIVATE)
-public class Mouse extends AbstractEntity {
+@EqualsAndHashCode(of="name", callSuper=false)
+public class Mouse extends ImmutableEntity {
 
     private static final long serialVersionUID = 9132197821372047114L;
 
@@ -30,42 +34,28 @@ public class Mouse extends AbstractEntity {
     @Column(name = "NAME", nullable = false, insertable = true, updatable = true)
     private String name;
 
-    public Mouse(UUID id) {
-        super(id);
-    }
+    @Getter
+    @Setter
+    @Column(name = "AGE", nullable = true, insertable = true, updatable = true)
+    private Integer age;
 
-    @Override
-    public int hashCode() {
-        // stick to Object.hashCode() for new entities.
-        if (isNew()) {
-            return super.hashCode();
-        }
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        return result;
-    }
+    @Getter
+    @Setter
+    @OneToOne(cascade = ALL, mappedBy = "mouse", orphanRemoval=true)
+    LatestMouse latest = LatestMouse.builder(this).build();
 
-    @Override
-    public boolean equals(Object obj) {
-        // stick to Object.equals() for new entities.
-        if (isNew())
-            return super.equals(obj);
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Mouse other = (Mouse) obj;
-        if (!getId().equals(other.getId()))
-            return false;
-        return true;
+    public Mouse(UUID uuid) {
+        super(uuid);
     }
 
     @Override
     public String toString() {
-        return String.format("Mouse [id=%s]", getId());
+        return String.format("Mouse [id=%s]", id);
+    }
+
+    @Override
+    public boolean isNew() {
+        return true;
     }
 
 }
