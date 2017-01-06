@@ -1,16 +1,12 @@
 package com.example;
 
-import static javax.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PRIVATE;
-
-import java.util.UUID;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -29,24 +25,15 @@ public class Mouse extends ImmutableEntity {
 
     private static final long serialVersionUID = 9132197821372047114L;
 
+    // stable identifier.
     @Getter
-    @Setter
-    @Column(name = "NAME", nullable = false, insertable = true, updatable = true)
+    @Column(name = "NAME", nullable = false, insertable = true, updatable = false)
     private String name;
 
     @Getter
     @Setter
     @Column(name = "AGE", nullable = true, insertable = true, updatable = true)
     private Integer age;
-
-    @Getter
-    @Setter
-    @OneToOne(cascade = ALL, mappedBy = "mouse", orphanRemoval=true)
-    LatestMouse latest = LatestMouse.builder(this).build();
-
-    public Mouse(UUID uuid) {
-        super(uuid);
-    }
 
     @Override
     public String toString() {

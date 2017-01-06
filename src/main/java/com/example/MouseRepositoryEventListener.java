@@ -1,13 +1,9 @@
 package com.example;
 
-import java.lang.reflect.Field;
-import java.util.UUID;
-
 import javax.persistence.EntityManager;
 
 import org.springframework.data.rest.core.event.AbstractRepositoryEventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,25 +13,31 @@ public class MouseRepositoryEventListener extends AbstractRepositoryEventListene
 
     private final EntityManager em;
 
-    private final MouseRepository repo;
+    private final LatestMouseRepository repo;
 
     @Override
     protected void onBeforeCreate(Mouse entity) {
-        Field id = ReflectionUtils.findField(Mouse.class, "id");
-        ReflectionUtils.makeAccessible(id);
-        UUID randomUUID = UUID.randomUUID();
-        ReflectionUtils.setField(id, entity, randomUUID);
+        generateNewId(entity);
+        updateLatestMouseTo(entity);
     }
 
     @Override
     protected void onBeforeSave(Mouse entity) {
         em.detach(entity);
-        if(entity.getId() != null) {
-            Mouse origMouse = repo.findOne(entity.getId());
-            origMouse.setLatest(null);
-            repo.save(origMouse);
-        }
-        onBeforeCreate(entity);
+        generateNewId(entity);
+        updateLatestMouseTo(entity);
     }
 
+    @Override
+    protected void onBeforeDelete(Mouse entity) {
+        repo.deleteByMouse(entity);
+    }
+
+    private void updateLatestMouseTo(Mouse entity) {
+        repo.save(new LatestMouse(entity.getName(), entity));
+    }
+
+    private void generateNewId(Mouse entity) {
+        entity.setId(null);
+    }
 }

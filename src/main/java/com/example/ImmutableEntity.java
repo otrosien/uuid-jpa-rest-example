@@ -1,11 +1,14 @@
 package com.example;
 
+import static lombok.AccessLevel.PACKAGE;
+
 import java.time.Instant;
 import java.util.UUID;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -17,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
@@ -24,8 +28,10 @@ import lombok.Getter;
 public abstract class ImmutableEntity implements Persistable<UUID> {
 
     @Id
-    @Column(columnDefinition="BINARY(16)")
+    @Column(columnDefinition="BINARY(16) NOT NULL")
+    @GeneratedValue(generator="uuid-sequence")
     @Getter
+    @Setter(PACKAGE)
     @JsonProperty(value="_id", access=JsonProperty.Access.READ_ONLY)
     protected UUID id;
 

@@ -2,47 +2,35 @@ package com.example;
 
 import static javax.persistence.AccessType.FIELD;
 
-import java.util.UUID;
-
 import javax.persistence.Access;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
+import javax.persistence.Index;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Access(FIELD)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-@Table(name="LATEST_MOUSE")
-@Builder
+@Table(name = "LATEST_MOUSE", indexes= {
+        @Index(columnList="ID", unique=true)
+})
 public class LatestMouse {
 
     @Id
     @Getter
-    private UUID id;
+    @Column(name = "NAME", nullable = false, insertable = true, updatable = false)
+    private String name;
 
-    @MapsId
-    @OneToOne
-    @JoinColumn(name = "MOUSE_ID", nullable = false, columnDefinition = "BINARY(16) NOT NULL")
+    @OneToOne(optional=false)
     @Getter
     private Mouse mouse;
 
-    public static LatestMouseBuilder builder(Mouse mouse) {
-        return new LatestMouseBuilder(mouse);
-    }
-
-    public static class LatestMouseBuilder {
-
-        LatestMouseBuilder(Mouse mouse) {
-            mouse(mouse);
-        }
-    }
 }
