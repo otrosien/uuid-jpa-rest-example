@@ -40,20 +40,20 @@ public class MouseApplicationRestTest {
                         "name", "mickey"
                         ))
         ))
-        .andDo(print())
+        // .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(header().string("Location", endsWith("/mice/mickey")))
         .andDo((putMouse) -> {
             // follow the location header.
             mvc.perform(get(putMouse.getResponse().getHeader("Location")))
-            .andDo(print())
+            // .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("name", is("mickey")))
             .andExpect(jsonPath("_id", notNullValue()));
         })
         .andDo((putMouse) -> {
             mvc.perform(delete(putMouse.getResponse().getHeader("Location")))
-            .andDo(print())
+            // .andDo(print())
             .andExpect(status().isNoContent());
         });
     }
@@ -66,7 +66,7 @@ public class MouseApplicationRestTest {
                         "age", 10
                         ))
         ))
-        .andDo(print())
+        // .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(header().string("Location", endsWith("/mice/bernhard")))
         .andDo((putMouse) -> {
@@ -76,13 +76,13 @@ public class MouseApplicationRestTest {
                     "name", "bernhard",
                     "age", 12
                     ))))
-            .andDo(print())
+            // .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("age", is(12)))
             .andExpect(jsonPath("_id", is(not(oldId))));
         });
         mvc.perform(get("/mice"))
-        .andDo(print())
+        // .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("_embedded.mice", hasSize(1)));
     }
