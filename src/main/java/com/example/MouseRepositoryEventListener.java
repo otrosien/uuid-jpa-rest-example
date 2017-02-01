@@ -16,8 +16,7 @@ public class MouseRepositoryEventListener extends AbstractRepositoryEventListene
     private final LatestMouseRepository repo;
 
     @Override
-    protected void onBeforeCreate(Mouse entity) {
-        generateNewId(entity);
+    protected void onAfterCreate(Mouse entity) {
         updateLatestMouseTo(entity);
     }
 
